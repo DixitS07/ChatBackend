@@ -1,21 +1,12 @@
 const cors = require('cors')
-const express = require('express')
 const users = {};
 
-const app = express();
-// app.use(cors());
-const server = require('http').createServer(app);
-const io = require('socket.io')(server);
-io.use(cors({
-    origin: 'http://localhost:4200',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE'
-}))
-let port = 8000
-app.listen(port, function () {
-    console.log('Server running on localhost:' + port + '...')
-})
-
-
+const io = require('socket.io')(8000, {
+    cors: {
+      origin: 'http://localhost:4200',
+      methods: ["GET", "POST"]
+    }
+  });
 
 io.on('connection',socket =>{
     console.log('connection established')
@@ -26,7 +17,7 @@ io.on('connection',socket =>{
     });
 
     socket.on('send',message=>{
-        console.log(message)
+    console.log(message,'received from anglar')
     socket.broadcast.emit('receive',{message:message,name:users[socket.id]})
     });
  
