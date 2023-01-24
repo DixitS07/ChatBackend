@@ -18,7 +18,7 @@ io.on('connection',socket =>{
 
     socket.on('send',message=>{
     console.log(message,'received from anglar')
-    socket.broadcast.emit('receive',{message:message,name:users[socket.id]})
+    socket.broadcast.emit('receive', {message:message,name:users[socket.id]})
     });
  
     socket.on('disconnect',message=>{
